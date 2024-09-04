@@ -11,13 +11,12 @@
     "postcss-selector-parser": "2.2.1"
   },
   "devDependencies": {
-    "@types/jest": "^29.5.12",
-    "jest": "^30.0.0-alpha.6",
     "postcss-scss": "^4.0.9",
     "stylelint": "^16.9.0",
     "stylelint-scss": "^6.5.1",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5",
+    "vitest-stylelint-utils": "^1.0.1"
   },
   "directories": {
     "doc": "docs"
@@ -33,7 +32,8 @@
     "stylelint-plugin"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "module": "index.mjs",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rstacruz/stylelint-rscss.git"
