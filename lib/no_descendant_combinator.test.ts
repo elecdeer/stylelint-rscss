@@ -1,34 +1,74 @@
-import { join } from "path";
+import { describe, expect, it } from "vitest";
+import { getTestRule } from "vitest-stylelint-utils";
 
-import stylelint from "stylelint";
+// TODO: Fix this
+// @ts-ignore
+import plugins from "../index.js";
 
-describe("no descendant combinator", () => {
-  test("css", async () => {
-    const result = await stylelint.lint({
-      files: [fixture("child.css")],
-    });
-    const warnings = result.results[0].warnings;
+const testRule = getTestRule({
+  plugins: [plugins],
+  describe,
+  expect,
+  it,
+});
 
-    expect(warnings.length).toBe(1);
-    expect(warnings[0].rule).toBe("rscss/no-descendant-combinator");
-    expect(warnings[0].text).toBe(
-      "Descendant combinator not allowed: 'a.bad-component .xyz' (rscss/no-descendant-combinator)"
-    );
-  });
+const childCssCode = `
+@charset 'utf-8';
 
-  test("scss", async () => {
-    const result = await stylelint.lint({
-      files: [fixture("child.scss")],
-      customSyntax: "postcss-scss",
-    });
-    const warnings = result.results[0].warnings;
+.foo-bar > .el {
+  display: flex;
+  flex: auto;
+}
 
-    expect(warnings.length).toBe(1);
-    expect(warnings[0].rule).toBe("rscss/no-descendant-combinator");
-    expect(warnings[0].text).toBe(
-      "Descendant combinator not allowed: '.component-name .badelement' (rscss/no-descendant-combinator)"
-    );
+a.bad-component .xyz {
+  color: blue;
+  display: block;
+}
+`;
+
+describe("no descendant combinator - css", () => {
+  testRule({
+    ruleName: "rscss/no-descendant-combinator",
+    config: [true],
+
+    reject: [
+      {
+        code: childCssCode,
+        message:
+          "Descendant combinator not allowed: 'a.bad-component .xyz' (rscss/no-descendant-combinator)",
+      },
+    ],
   });
 });
 
-const fixture = (path: string) => join(__dirname, "../fixtures", path);
+const childScssCode = `
+.component-name {
+  > .goodelement {
+    color: blue;
+  }
+
+  .badelement {
+    color: blue;
+
+    .alsobad {
+      color: red;
+    }
+  }
+}
+`;
+
+describe("no descendant combinator - scss", () => {
+  testRule({
+    ruleName: "rscss/no-descendant-combinator",
+    customSyntax: "postcss-scss",
+    config: [true],
+
+    reject: [
+      {
+        code: childScssCode,
+        message:
+          "Descendant combinator not allowed: '.component-name .badelement' (rscss/no-descendant-combinator)",
+      },
+    ],
+  });
+});
