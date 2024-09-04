@@ -1,6 +1,6 @@
-const { join } = require("path");
+import { join } from "path";
 
-const stylelint = require("stylelint");
+import stylelint from "stylelint";
 
 describe("class format", () => {
   test("basic", async () => {
@@ -115,4 +115,4 @@ describe("class format", () => {
   });
 });
 
-const fixture = (path) => join(__dirname, "../fixtures", path);
+const fixture = (path: string) => join(__dirname, "../fixtures", path);

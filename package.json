@@ -11,10 +11,13 @@
     "postcss-selector-parser": "2.2.1"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
+    "@types/jest": "^29.5.12",
+    "jest": "^30.0.0-alpha.6",
     "postcss-scss": "^4.0.9",
     "stylelint": "^14",
-    "stylelint-scss": "^4"
+    "stylelint-scss": "^4",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.5.4"
   },
   "directories": {
     "doc": "docs"
@@ -37,7 +40,7 @@
   },
   "scripts": {
     "errors": "stylelint 'fixtures/*'; true",
-    "test": "tape test.js"
+    "test": "jest"
   },
   "packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177"
 }

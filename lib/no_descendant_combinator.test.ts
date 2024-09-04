@@ -1,6 +1,6 @@
-const { join } = require("path");
+import { join } from "path";
 
-const stylelint = require("stylelint");
+import stylelint from "stylelint";
 
 describe("no descendant combinator", () => {
   test("css", async () => {
@@ -31,4 +31,4 @@ describe("no descendant combinator", () => {
   });
 });
 
-const fixture = (path) => join(__dirname, "../fixtures", path);
+const fixture = (path: string) => join(__dirname, "../fixtures", path);
