@@ -14,8 +14,8 @@
     "@types/jest": "^29.5.12",
     "jest": "^30.0.0-alpha.6",
     "postcss-scss": "^4.0.9",
-    "stylelint": "^14",
-    "stylelint-scss": "^4",
+    "stylelint": "^16.9.0",
+    "stylelint-scss": "^6.5.1",
     "ts-jest": "^29.2.5",
     "typescript": "^5.5.4"
   },
