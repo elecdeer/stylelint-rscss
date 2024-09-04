@@ -11,9 +11,10 @@
     "postcss-selector-parser": "2.2.1"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
+    "postcss-scss": "^4.0.9",
     "stylelint": "^14",
-    "stylelint-scss": "^4",
-    "tape": "4.6.0"
+    "stylelint-scss": "^4"
   },
   "directories": {
     "doc": "docs"
