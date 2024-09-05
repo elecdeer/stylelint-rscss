@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { getTestRule } from "vitest-stylelint-utils";
 
@@ -12,19 +14,15 @@ const testRule = getTestRule({
 	it,
 });
 
-const childCssCode = `
-@charset 'utf-8';
+const childCssCode = fs.readFileSync(
+	path.resolve(__dirname, "../fixtures/child.css"),
+	"utf-8",
+);
 
-.foo-bar > .el {
-  display: flex;
-  flex: auto;
-}
-
-a.bad-component .xyz {
-  color: blue;
-  display: block;
-}
-`;
+const childScssCode = fs.readFileSync(
+	path.resolve(__dirname, "../fixtures/child.scss"),
+	"utf-8",
+);
 
 describe("no descendant combinator - css", () => {
 	testRule({
@@ -40,22 +38,6 @@ describe("no descendant combinator - css", () => {
 		],
 	});
 });
-
-const childScssCode = `
-.component-name {
-  > .goodelement {
-    color: blue;
-  }
-
-  .badelement {
-    color: blue;
-
-    .alsobad {
-      color: red;
-    }
-  }
-}
-`;
 
 describe("no descendant combinator - scss", () => {
 	testRule({
