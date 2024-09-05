@@ -11,6 +11,12 @@ importers:
       postcss-resolve-nested-selector:
         specifier: ^0.1.6
         version: 0.1.6
+      postcss-selector-parser:
+        specifier: ^6.1.2
+        version: 6.1.2
+      stylelint-scss:
+        specifier: ^6.5.1
+        version: 6.5.1(stylelint@16.9.0(typescript@5.5.4))
     devDependencies:
       '@biomejs/biome':
         specifier: 1.8.3
@@ -21,15 +27,9 @@ importers:
       postcss-scss:
         specifier: ^4.0.9
         version: 4.0.9(postcss@8.4.45)
-      postcss-selector-parser:
-        specifier: ^6.1.2
-        version: 6.1.2
       stylelint:
         specifier: ^16.9.0
         version: 16.9.0(typescript@5.5.4)
-      stylelint-scss:
-        specifier: ^6.5.1
-        version: 6.5.1(stylelint@16.9.0(typescript@5.5.4))
       typescript:
         specifier: ^5.5.4
         version: 5.5.4
