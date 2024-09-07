@@ -44,7 +44,7 @@ const messages = utils.ruleMessages(ruleName, {
 	},
 	invalidVariantNames(selectors: string) {
 		const isMultiple = selectors.split(",").length > 1;
-		return `Invalid variant ${isMultiple ? "name" : "names"}: ${selectors}`;
+		return `Invalid variant ${isMultiple ? "names" : "name"}: '${selectors}'`;
 	},
 	tooManyComponents(selector: string) {
 		return `Only one component name is allowed: '${selector
