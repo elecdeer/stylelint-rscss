@@ -1,28 +1,15 @@
 import type postcss from "postcss";
 import type parser from "postcss-selector-parser";
 import stylelint from "stylelint";
+import {
+	type ResolvedSecondaryOptions,
+	type SecondaryOptions,
+	resolveSecondaryConfig,
+} from "./helpers/class_format_options";
 import { splitBy } from "./helpers/split_by";
 import { walkSelectors } from "./helpers/walk_selectors";
 
 const { utils, createPlugin } = stylelint;
-
-export type ClassificationStyle =
-	| "component"
-	| "element"
-	| "variant"
-	| "helper"
-	| "pascal-case"
-	| "camel-case";
-
-type RegExpStr = string;
-export type SecondaryOptions = {
-	component: ClassificationStyle | RegExpStr;
-	element: ClassificationStyle | RegExpStr;
-	variant: ClassificationStyle | RegExpStr;
-	helper: ClassificationStyle | RegExpStr;
-	maxDepth: number;
-	componentWhitelist: string[];
-};
 
 const ruleName = "rscss/class-format";
 
@@ -56,37 +43,11 @@ const messages = utils.ruleMessages(ruleName, {
 	},
 });
 
-/**
- * @internal
- * default regular expressions
- */
-const EXPR = {
-	component: /^([a-z][a-z0-9]*)(-([a-z][a-z0-9]*))+$/,
-	"pascal-case": /^([A-Z][a-z0-9]*)+$/,
-	"camel-case": /^([a-z][a-z0-9]*)([A-Z][a-z0-9]*)+$/,
-	element: /^([a-z][a-z0-9]*)$/,
-	variant: /^(-[a-z0-9]+)(-[a-z0-9]+)*$/,
-	helper: /^_([a-z][a-z0-9\-]*)$/,
-} as const satisfies Record<ClassificationStyle, RegExp>;
-
-/**
- * @internal
- * default secondary options
- */
-const DEFAULTS = {
-	component: "component",
-	element: "element",
-	variant: "variant",
-	helper: "helper",
-	maxDepth: 3,
-	componentWhitelist: [],
-} as const satisfies SecondaryOptions;
-
 const plugin: stylelint.Rule<boolean | "never", SecondaryOptions> = (
 	primaryOption,
 	_options: Partial<SecondaryOptions> = {},
 ) => {
-	const options = Object.assign({}, DEFAULTS, _options);
+	const options = resolveSecondaryConfig(_options);
 
 	return async (root, result) => {
 		if (!primaryOption || primaryOption === "never") return;
@@ -118,7 +79,7 @@ const validateDepth = (
 	node: postcss.Rule,
 	result: stylelint.PostcssResult,
 	selector: parser.Selector,
-	options: SecondaryOptions,
+	options: ResolvedSecondaryOptions,
 ) => {
 	if (typeof options.maxDepth !== "number") return;
 	if (parts.length - 1 > options.maxDepth) {
@@ -140,14 +101,14 @@ const validateComponent = (
 	parts: parser.Node[],
 	node: postcss.Rule,
 	result: stylelint.PostcssResult,
-	options: SecondaryOptions,
+	options: ResolvedSecondaryOptions,
 ) => {
 	const classes = parts.filter(isClass);
 	const selector = classes.map((c) => `${c}`).join("");
 
 	if (options.helper) {
 		// Helpers are fine, but they must not be mixed with others.
-		const helpers = classes.filter((c) => expr(options.helper).test(c.value));
+		const helpers = classes.filter((c) => options.helper.test(c.value));
 		if (helpers.length === classes.length) {
 			throw { skip: true };
 		}
@@ -169,7 +130,7 @@ const validateComponent = (
 		// Ensure that there's one component name in it.
 		const valids = classes.filter(
 			(c) =>
-				expr(options.component).test(c.value) ||
+				options.component.test(c.value) ||
 				options.componentWhitelist.includes(c.value),
 		);
 
@@ -200,9 +161,9 @@ const validateComponent = (
 		const invalids = classes.filter(
 			(c) =>
 				!(
-					expr(options.component).test(c.value) ||
+					options.component.test(c.value) ||
 					options.componentWhitelist.includes(c.value) ||
-					expr(options.variant).test(c.value)
+					options.variant.test(c.value)
 				),
 		);
 
@@ -251,7 +212,7 @@ const validateElement = (
 	parts: parser.Node[],
 	node: postcss.Rule,
 	result: stylelint.PostcssResult,
-	options: SecondaryOptions,
+	options: ResolvedSecondaryOptions,
 ) => {
 	// Only work if there are classes.
 	const classes = parts.filter(isClass);
@@ -262,9 +223,7 @@ const validateElement = (
 
 	if (options.variant && isAllClasses) {
 		// All variants (no elements)? That's bad
-		const validVariants = classes.filter((c) =>
-			expr(options.variant).test(c.value),
-		);
+		const validVariants = classes.filter((c) => options.variant.test(c.value));
 		if (validVariants.length === classes.length) {
 			utils.report({
 				message: messages.variantWithoutElement(selector),
@@ -280,13 +239,10 @@ const validateElement = (
 		if (idx === 0) {
 			if (options.element) {
 				// The first class is always the element.
-				const isValid = expr(options.element).test(c.value);
+				const isValid = options.element.test(c.value);
 
 				// It's valid if it's an element, or it's a variant of a tag
-				if (
-					!isValid &&
-					!(expr(options.variant).test(c.value) && !isAllClasses)
-				) {
+				if (!isValid && !(options.variant.test(c.value) && !isAllClasses)) {
 					utils.report({
 						message: messages.invalidElementName(c.toString()),
 						node,
@@ -299,7 +255,7 @@ const validateElement = (
 		} else {
 			if (options.variant) {
 				// The other classes are variants.
-				const isValid = expr(options.variant).test(c.value);
+				const isValid = options.variant.test(c.value);
 
 				if (!isValid) {
 					utils.report({
@@ -326,33 +282,6 @@ const validateElement = (
 const getLastPart = (parts: parser.Node[]) => {
 	const subparts = splitBy(parts, (s) => s.type === "combinator");
 	return subparts[subparts.length - 1];
-};
-
-/**
- * @internal
- * @example
- * // Using predefined classification style
- * expr('component'); // returns EXPR.component
- *
- * // Using custom regular expression
- * expr(/.../); // returns /.../
- */
-const expr = (name: ClassificationStyle | string): RegExp => {
-	if (!name) throw new Error("No name provided");
-	if (
-		[
-			"component",
-			"element",
-			"variant",
-			"helper",
-			"pascal-case",
-			"camel-case",
-		].includes(name)
-	) {
-		return EXPR[name as ClassificationStyle];
-	}
-	if (typeof name === "string") return new RegExp(name);
-	throw new Error(`Invalid expression: ${name}`);
 };
 
 export default createPlugin(ruleName, plugin);

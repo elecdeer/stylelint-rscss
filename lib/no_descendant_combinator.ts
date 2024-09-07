@@ -16,9 +16,7 @@ const plugin: stylelint.Rule<boolean | "never", unknown> =
 		if (!primaryOption || primaryOption === "never") return;
 
 		await walkSelectors(root, (rule, selector) => {
-			for (let i = 0, len = selector.nodes.length; i < len; i++) {
-				const part = selector.nodes[i];
-
+			selector.nodes.forEach((part) => {
 				if (part.type === "combinator" && part.value === " ") {
 					utils.report({
 						message: messages.expected(`${selector}`),
@@ -29,7 +27,7 @@ const plugin: stylelint.Rule<boolean | "never", unknown> =
 
 					throw { skip: true };
 				}
-			}
+			});
 		});
 	};
 
