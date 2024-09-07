@@ -1,15 +1,13 @@
-import type parser from "postcss-selector-parser";
-
 /*
  * @internal
  * split by a function
  */
-export const splitBy = (
-	list: parser.Node[],
-	fn: (item: parser.Node, idx: number) => boolean,
-): parser.Node[][] => {
+export const splitBy = <T>(
+	list: T[],
+	fn: (item: T, idx: number) => boolean,
+): T[][] => {
 	const result = [];
-	let section: parser.Node[] = [];
+	let section: T[] = [];
 
 	list.forEach((item, idx) => {
 		if (fn(item, idx)) {
