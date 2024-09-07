@@ -10,12 +10,12 @@ import type parser from "postcss-selector-parser";
  *     })
  */
 
-function walkSelectors(
+const walkSelectors = (
 	root: postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
-) {
+) => {
 	visit(root, fn);
-}
+};
 
 /**
  * Internal: recursively visit a node.
@@ -51,8 +51,10 @@ const visitRule = (
 		});
 	} catch (err: unknown) {
 		// Use `throw {skip: true}` to stop processing that nested tree.
-		if (!err.skip) throw err;
-		return err;
+		if (typeof err === "object" && err && "skip" in err) {
+			return err;
+		}
+		throw err;
 	}
 };
 
