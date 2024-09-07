@@ -6,6 +6,24 @@ import type postcss from "postcss";
 
 const { utils, createPlugin } = stylelint;
 
+export type ClassificationStyle =
+	| "component"
+	| "element"
+	| "variant"
+	| "helper"
+	| "pascal-case"
+	| "camel-case";
+
+type RegExpStr = string;
+export type SecondaryOptions = {
+	component: ClassificationStyle | RegExpStr;
+	element: ClassificationStyle | RegExpStr;
+	variant: ClassificationStyle | RegExpStr;
+	helper: ClassificationStyle | RegExpStr;
+	maxDepth: number;
+	componentWhitelist: string[];
+};
+
 const ruleName = "rscss/class-format";
 
 const messages = utils.ruleMessages(ruleName, {
@@ -39,9 +57,9 @@ const messages = utils.ruleMessages(ruleName, {
 });
 
 /**
- * Internal: default regular expressions
+ * @internal
+ * default regular expressions
  */
-
 const EXPR = {
 	component: /^([a-z][a-z0-9]*)(-([a-z][a-z0-9]*))+$/,
 	"pascal-case": /^([A-Z][a-z0-9]*)+$/,
@@ -51,27 +69,10 @@ const EXPR = {
 	helper: /^_([a-z][a-z0-9\-]*)$/,
 } as const satisfies Record<ClassificationStyle, RegExp>;
 
-export type ClassificationStyle =
-	| "component"
-	| "element"
-	| "variant"
-	| "helper"
-	| "pascal-case"
-	| "camel-case";
-
-export type SecondaryOptions = {
-	component: ClassificationStyle | string;
-	element: ClassificationStyle | string;
-	variant: ClassificationStyle | string;
-	helper: ClassificationStyle | string;
-	maxDepth: number;
-	componentWhitelist: string[];
-};
-
 /**
- * Internal: default secondary options
+ * @internal
+ * default secondary options
  */
-
 const DEFAULTS = {
 	component: "component",
 	element: "element",
@@ -81,9 +82,6 @@ const DEFAULTS = {
 	componentWhitelist: [],
 } as const satisfies SecondaryOptions;
 
-/**
- * Internal: the plugin
- */
 const plugin: stylelint.Rule<boolean | "never", SecondaryOptions> = (
 	primaryOption,
 	_options: Partial<SecondaryOptions> = {},
@@ -135,9 +133,9 @@ const validateDepth = (
 };
 
 /**
- * Internal: validate a top-level class
+ * @internal
+ * validate a top-level class
  */
-
 const validateComponent = (
 	parts: parser.Node[],
 	node: postcss.Rule,
@@ -223,12 +221,13 @@ const validateComponent = (
 };
 
 /**
- * Internal: get the classes of each part.
+ * @internal
+ * get the classes of each part.
  *
- *     '.foo-bar .a' => [['.foo-bar'], ['.a']]
- *     '.foo-bar.baz > .a' => [['.foo-bar', '.baz'], ['.a']]
+ * @example
+ * get_parts('.foo-bar .a'); // returns [['.foo-bar'], ['.a']]
+ * get_parts('.foo-bar.baz > .a'); // returns [['.foo-bar', '.baz'], ['.a']]
  */
-
 const getParts = (selector: parser.Selector) => {
 	const parts = splitBy(selector.nodes, isSeparator);
 	return parts
@@ -247,9 +246,9 @@ const isClass = (node: parser.Node): node is parser.ClassName => {
 };
 
 /**
- * Internal: validate a non-top-level class
+ * @internal
+ * validate a non-top-level class
  */
-
 const validateElement = (
 	parts: parser.Node[],
 	node: postcss.Rule,
@@ -319,24 +318,27 @@ const validateElement = (
 };
 
 /**
- * Internal: discard everything before the last combinator.
+ * @internal
+ * discard everything before the last combinator.
  *
- *    '.a' => '.a'
- *    '.a ~ .b ~ .c' => '.c'
+ * @example
+ * get_last_part('.a'); // returns '.a'
+ * get_last_part('.a ~ .b ~ .c'); // returns '.c'
  */
-
 const getLastPart = (parts: parser.Node[]) => {
 	const subparts = splitBy(parts, (s) => s.type === "combinator");
 	return subparts[subparts.length - 1];
 };
 
 /**
- * Internal: returns a regular expression.
+ * @internal
+ * @example
+ * // Using predefined classification style
+ * expr('component'); // returns EXPR.component
  *
- *     expr('component') => EXPR.component
- *     expr(/.../) => /.../
+ * // Using custom regular expression
+ * expr(/.../); // returns /.../
  */
-
 const expr = (name: ClassificationStyle | string): RegExp => {
 	if (!name) throw new Error("No name provided");
 	if (
@@ -354,9 +356,5 @@ const expr = (name: ClassificationStyle | string): RegExp => {
 	if (typeof name === "string") return new RegExp(name);
 	throw new Error(`Invalid expression: ${name}`);
 };
-
-/*
- * Export
- */
 
 export default createPlugin(ruleName, plugin);

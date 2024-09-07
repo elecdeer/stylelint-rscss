@@ -1,9 +1,9 @@
-/*
- * Internal: split by a function
- */
-
 import type parser from "postcss-selector-parser";
 
+/*
+ * @internal
+ * split by a function
+ */
 const splitBy = (
 	list: parser.Node[],
 	fn: (item: parser.Node, idx: number) => boolean,

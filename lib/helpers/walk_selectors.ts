@@ -5,11 +5,11 @@ import type parser from "postcss-selector-parser";
 /**
  * Walks all selectors in a tree.
  *
- *     walkSelectors(root, (rule, selector) => {
- *       // ...
- *     })
+ * @example
+ * walkSelectors(root, (rule, selector) => {
+ *   // ...
+ * });
  */
-
 const walkSelectors = (
 	root: postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
@@ -18,9 +18,9 @@ const walkSelectors = (
 };
 
 /**
- * Internal: recursively visit a node.
+ * @internal
+ * recursively visit a node.
  */
-
 const visit = (
 	node: postcss.ChildNode | postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,

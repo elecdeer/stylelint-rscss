@@ -6,7 +6,6 @@ import type * as postcss from "postcss";
 /**
  * Flattens a nested `rule`. Invokes `fn` with the flattened selectors.
  */
-
 const flattenRule = <T>(
 	rule: postcss.Rule,
 	fn: (selectors: selectorParser.Root) => T,
