@@ -1,17 +1,17 @@
 {
-	"name": "stylelint-rscss",
+	"name": "@elecdeer/stylelint-rscss",
 	"description": "Validate CSS (and SCSS, Less, SugarSS) to RSCSS conventions",
 	"version": "0.4.0",
 	"author": "Rico Sta. Cruz <rico@ricostacruz.com> (http://ricostacruz.com)",
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/rstacruz/stylelint-rscss.git"
+		"url": "git+https://github.com/elecdeer/stylelint-rscss.git"
 	},
 	"bugs": {
-		"url": "https://github.com/rstacruz/stylelint-rscss/issues"
+		"url": "https://github.com/elecdeer/stylelint-rscss/issues"
 	},
-	"homepage": "https://github.com/rstacruz/stylelint-rscss#readme",
+	"homepage": "https://github.com/elecdeer/stylelint-rscss#readme",
 	"directories": {
 		"doc": "docs"
 	},
@@ -44,7 +44,8 @@
 		"test": "vitest",
 		"check:type": "tsc --noEmit",
 		"check:biome": "biome ci",
-		"build": "tsup"
+		"build": "tsup",
+		"changeset": "changeset"
 	},
 	"packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177",
 	"dependencies": {
