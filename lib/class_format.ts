@@ -170,7 +170,7 @@ const validateComponent = (
 		const valids = classes.filter(
 			(c) =>
 				expr(options.component).test(c.value) ||
-				options.componentWhitelist.indexOf(c.value) !== -1,
+				options.componentWhitelist.includes(c.value),
 		);
 
 		if (valids.length === 0) {
@@ -201,7 +201,7 @@ const validateComponent = (
 			(c) =>
 				!(
 					expr(options.component).test(c.value) ||
-					options.componentWhitelist.indexOf(c.value) !== -1 ||
+					options.componentWhitelist.includes(c.value) ||
 					expr(options.variant).test(c.value)
 				),
 		);
