@@ -1,11 +1,12 @@
-## [v0.4.0]
-
 ## 1.0.0
 
 ### Major Changes
 
 - [#2](https://github.com/elecdeer/stylelint-rscss/pull/2) [`42acedb`](https://github.com/elecdeer/stylelint-rscss/commit/42acedb9da7f3a7b0e2f35c5b00785bb4208d39d) Thanks [@elecdeer](https://github.com/elecdeer)! - First fork release
 
+---
+
+## [v0.4.0]
   > Apr 3, 2017
 
 - [#4] - Allow regexps in class format options.
