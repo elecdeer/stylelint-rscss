@@ -37,7 +37,9 @@
 			"default": "./dist/config.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"test": "vitest",
 		"check:type": "tsc --noEmit",
@@ -46,6 +48,7 @@
 	},
 	"packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177",
 	"dependencies": {
+		"postcss": "^8.4.45",
 		"postcss-resolve-nested-selector": "^0.1.6",
 		"postcss-selector-parser": "^6.1.2",
 		"stylelint-scss": "^6.5.1"

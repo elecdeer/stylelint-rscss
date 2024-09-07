@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      postcss:
+        specifier: ^8.4.45
+        version: 8.4.45
       postcss-resolve-nested-selector:
         specifier: ^0.1.6
         version: 0.1.6
