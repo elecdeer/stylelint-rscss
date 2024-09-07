@@ -1,6 +1,9 @@
 {
 	"$schema": "https://unpkg.com/@changesets/config@3.0.3/schema.json",
-	"changelog": ["@changesets/changelog-github", { "repo": "<org>/<repo>" }],
+	"changelog": [
+		"@changesets/changelog-github",
+		{ "repo": "@elecdeer/stylelint-rscss" }
+	],
 	"commit": false,
 	"fixed": [],
 	"linked": [],
