@@ -6,7 +6,7 @@ Here's an example `.stylelintrc` that overrides some stylelint-rscss configurati
 // .stylelintrc
 {
   "plugins": [
-    "stylelint-rscss"
+    "@elecdeer/stylelint-rscss"
   ],
   "rules": {
     "rscss/no-descendant-combinator": true,
