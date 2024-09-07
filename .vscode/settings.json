@@ -9,5 +9,8 @@
 	"biome.searchInPath": true,
 	"editor.codeActionsOnSave": {
 		"source.organizeImports": "explicit"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "biomejs.biome"
 	}
 }
