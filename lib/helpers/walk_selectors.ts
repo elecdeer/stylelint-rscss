@@ -31,9 +31,7 @@ const visit = async (
 	}
 
 	if ("nodes" in node && node.nodes) {
-		node.nodes.forEach((subnode) => {
-			visit(subnode, fn);
-		});
+		await Promise.all(node.nodes.map((subnode) => visit(subnode, fn)));
 	}
 };
 
