@@ -1,5 +1,12 @@
 # @elecdeer/stylelint-rscss
 
+## 1.0.2
+
+### Patch Changes
+
+- [#8](https://github.com/elecdeer/stylelint-rscss/pull/8) [`69233cd`](https://github.com/elecdeer/stylelint-rscss/commit/69233cd0133b6d3b6712a99ec744ca8246534cb5) Thanks [@elecdeer](https://github.com/elecdeer)! - update release workflow
+  add pnpm exec to run changeset as it's no in PATH
+
 ## 1.0.1
 
 ### Patch Changes
