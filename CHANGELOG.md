@@ -1,5 +1,11 @@
 # @elecdeer/stylelint-rscss
 
+## 1.0.3
+
+### Patch Changes
+
+- [#10](https://github.com/elecdeer/stylelint-rscss/pull/10) [`01c2494`](https://github.com/elecdeer/stylelint-rscss/commit/01c2494ddc0d88ba8bcf4d0fab9059f3c8dabc34) Thanks [@elecdeer](https://github.com/elecdeer)! - enable npm provenance
+
 ## 1.0.2
 
 ### Patch Changes
