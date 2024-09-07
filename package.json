@@ -40,6 +40,10 @@
 	"files": [
 		"dist"
 	],
+	"publishConfig": {
+		"access": "public",
+		"provenance": true
+	},
 	"scripts": {
 		"test": "vitest",
 		"check:type": "tsc --noEmit",
