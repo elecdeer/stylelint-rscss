@@ -84,8 +84,7 @@ const DEFAULTS = {
 /**
  * Internal: the plugin
  */
-// TODO: RuleBase to Rule type
-const plugin: stylelint.RuleBase<boolean | "never", SecondaryOptions> = (
+const plugin: stylelint.Rule<boolean | "never", SecondaryOptions> = (
 	primaryOption,
 	_options: Partial<SecondaryOptions> = {},
 ) => {
@@ -113,6 +112,8 @@ const plugin: stylelint.RuleBase<boolean | "never", SecondaryOptions> = (
 		});
 	};
 };
+plugin.ruleName = ruleName;
+plugin.messages = messages;
 
 const validateDepth = (
 	parts: parser.Node[][],

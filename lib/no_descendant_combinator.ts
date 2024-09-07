@@ -12,7 +12,7 @@ const messages = utils.ruleMessages(ruleName, {
 });
 
 // TODO: RuleBase to Rule type
-const plugin: stylelint.RuleBase<boolean | "never", never> =
+const plugin: stylelint.Rule<boolean | "never", unknown> =
 	(primaryOption) => (root, result) => {
 		if (!primaryOption || primaryOption === "never") return;
 
@@ -33,6 +33,9 @@ const plugin: stylelint.RuleBase<boolean | "never", never> =
 			}
 		});
 	};
+
+plugin.ruleName = ruleName;
+plugin.messages = messages;
 
 /*
  * Export
