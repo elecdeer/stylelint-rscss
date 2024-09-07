@@ -10,23 +10,23 @@ import { flattenRule } from "./flatten_rule";
  *   // ...
  * });
  */
-export const walkSelectors = (
+export const walkSelectors = async (
 	root: postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
 ) => {
-	visit(root, fn);
+	await visit(root, fn);
 };
 
 /**
  * @internal
  * recursively visit a node.
  */
-const visit = (
+const visit = async (
 	node: postcss.ChildNode | postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
 ) => {
 	if (node.type === "rule") {
-		const result = visitRule(node, fn);
+		const result = await visitRule(node, fn);
 		if (result?.skip) return;
 	}
 
@@ -41,12 +41,12 @@ const visit = (
  * @internal
  * visits a `Rule` node.
  */
-const visitRule = (
+const visitRule = async (
 	rule: postcss.Rule,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
 ) => {
 	try {
-		flattenRule(rule, (selectors) => {
+		await flattenRule(rule, (selectors) => {
 			selectors.nodes.forEach((selector) => fn(rule, selector));
 		});
 	} catch (err: unknown) {

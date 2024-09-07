@@ -6,14 +6,14 @@ import type * as postcss from "postcss";
 /**
  * Flattens a nested `rule`. Invokes `fn` with the flattened selectors.
  */
-export const flattenRule = <T>(
+export const flattenRule = async <T>(
 	rule: postcss.Rule,
 	fn: (selectors: selectorParser.Root) => T,
 ) => {
 	const sel = resolveNestedSelector(rule.selector, rule);
 	let result: T | undefined;
 
-	selectorParser((selectors) => {
+	await selectorParser((selectors) => {
 		result = fn(selectors);
 	}).process(sel[0]);
 

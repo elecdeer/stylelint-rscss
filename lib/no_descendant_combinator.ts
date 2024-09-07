@@ -12,10 +12,10 @@ const messages = utils.ruleMessages(ruleName, {
 });
 
 const plugin: stylelint.Rule<boolean | "never", unknown> =
-	(primaryOption) => (root, result) => {
+	(primaryOption) => async (root, result) => {
 		if (!primaryOption || primaryOption === "never") return;
 
-		walkSelectors(root, (rule, selector) => {
+		await walkSelectors(root, (rule, selector) => {
 			for (let i = 0, len = selector.nodes.length; i < len; i++) {
 				const part = selector.nodes[i];
 

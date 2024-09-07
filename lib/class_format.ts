@@ -88,9 +88,9 @@ const plugin: stylelint.Rule<boolean | "never", SecondaryOptions> = (
 ) => {
 	const options = Object.assign({}, DEFAULTS, _options);
 
-	return (root, result) => {
+	return async (root, result) => {
 		if (!primaryOption || primaryOption === "never") return;
-		walkSelectors(root, (node, selector) => {
+		await walkSelectors(root, (node, selector) => {
 			const parts = getParts(selector);
 
 			// Only operate on rules with classes.
