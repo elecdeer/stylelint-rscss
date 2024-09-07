@@ -7,9 +7,10 @@
 ---
 
 ## [v0.4.0]
-  > Apr 3, 2017
 
-- [#4] - Allow regexps in class format options.
+> Apr 3, 2017
+
+- [https://github.com/rstacruz/stylelint-rscss/pull/4] - Allow regexps in class format options.
 
 [v0.4.0]: https://github.com/rstacruz/stylelint-rscss/compare/v0.3.2...v0.4.0
 
@@ -17,7 +18,7 @@
 
 > Sep 21, 2016
 
-- [#3] - Fix error when setting rules to `false`.
+- [https://github.com/rstacruz/stylelint-rscss/pull/3] - Fix error when setting rules to `false`.
 
 ## [v0.3.1]
 
