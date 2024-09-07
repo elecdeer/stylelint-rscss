@@ -1,5 +1,11 @@
 ## 1.0.0
 
+## 1.0.1
+
+### Patch Changes
+
+- [#6](https://github.com/elecdeer/stylelint-rscss/pull/6) [`fc11f21`](https://github.com/elecdeer/stylelint-rscss/commit/fc11f21116874fd8b0bc1f04868ab9dd4ff540a3) Thanks [@elecdeer](https://github.com/elecdeer)! - release in npm registry by changeset workflow
+
 ### Major Changes
 
 - [#2](https://github.com/elecdeer/stylelint-rscss/pull/2) [`42acedb`](https://github.com/elecdeer/stylelint-rscss/commit/42acedb9da7f3a7b0e2f35c5b00785bb4208d39d) Thanks [@elecdeer](https://github.com/elecdeer)! - First fork release
