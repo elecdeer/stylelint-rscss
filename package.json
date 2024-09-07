@@ -1,7 +1,7 @@
 {
 	"name": "@elecdeer/stylelint-rscss",
 	"description": "Validate CSS (and SCSS, Less, SugarSS) to RSCSS conventions",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": "Rico Sta. Cruz <rico@ricostacruz.com> (http://ricostacruz.com)",
 	"license": "MIT",
 	"repository": {
