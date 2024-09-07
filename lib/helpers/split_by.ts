@@ -3,22 +3,23 @@
  * split by a function
  */
 export const splitBy = <T>(
-	list: T[],
-	fn: (item: T, idx: number) => boolean,
+	list: readonly T[],
+	isSeparator: (item: T, idx: number) => boolean,
 ): T[][] => {
-	const result = [];
+	const result: T[][] = [];
 	let section: T[] = [];
 
 	list.forEach((item, idx) => {
-		if (fn(item, idx)) {
+		if (isSeparator(item, idx)) {
 			result.push(section);
-			result.push(item);
 			section = [];
 		} else {
 			section.push(item);
 		}
 	});
 
-	result.push(section);
+	if (section.length > 0) {
+		result.push(section);
+	}
 	return result;
 };

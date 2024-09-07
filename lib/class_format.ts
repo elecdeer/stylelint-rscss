@@ -230,9 +230,7 @@ const validateComponent = (
  */
 const getParts = (selector: parser.Selector) => {
 	const parts = splitBy(selector.nodes, isSeparator);
-	return parts
-		.filter((_, idx) => idx % 2 === 0) // Remove combinators
-		.map(getLastPart); // `.a ~ .b ~ .c` => `.c`
+	return parts.map(getLastPart); // `.a ~ .b ~ .c` => `.c`
 };
 
 const isSeparator = (node: parser.Node): node is parser.Combinator => {
