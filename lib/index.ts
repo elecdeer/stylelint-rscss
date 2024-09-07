@@ -1,6 +1,6 @@
 import type { Plugin } from "stylelint";
-import classFormat from "./class_format.js";
-import noDescendantCombinator from "./no_descendant_combinator.js";
+import classFormat from "./class_format";
+import noDescendantCombinator from "./no_descendant_combinator";
 
 const plugins: Plugin[] = [noDescendantCombinator, classFormat];
 

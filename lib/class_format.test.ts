@@ -1,12 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { getTestRule } from "vitest-stylelint-utils";
 
-// TODO: Fix this
-// @ts-ignore
-import plugins from "../index.js";
+import plugins from ".";
 
 const testRule = getTestRule({
-	plugins: [plugins],
+	plugins,
 	describe,
 	expect,
 	it,

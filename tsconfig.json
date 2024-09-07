@@ -1,13 +1,13 @@
 {
 	"compilerOptions": {
 		"lib": ["es2023"],
-		"module": "node16",
+		"module": "ESNext",
 		"target": "es2022",
 
 		"strict": true,
 		"esModuleInterop": true,
 		"skipLibCheck": true,
-		"moduleResolution": "node16"
+		"moduleResolution": "Bundler"
 	},
 	"include": ["lib/**/*.ts"]
 }

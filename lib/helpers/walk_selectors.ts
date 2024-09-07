@@ -1,6 +1,6 @@
 import type postcss from "postcss";
-import { flattenRule } from "./flatten_rule.js";
 import type parser from "postcss-selector-parser";
+import { flattenRule } from "./flatten_rule";
 
 /**
  * Walks all selectors in a tree.
