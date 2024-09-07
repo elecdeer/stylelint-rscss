@@ -1,4 +1,6 @@
+import type postcss from "postcss";
 import flattenRule from "./flatten_rule.js";
+import type parser from "postcss-selector-parser";
 
 /**
  * Walks all selectors in a tree.
@@ -8,7 +10,10 @@ import flattenRule from "./flatten_rule.js";
  *     })
  */
 
-function walkSelectors(root, fn) {
+function walkSelectors(
+	root: postcss.Root,
+	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
+) {
 	visit(root, fn);
 }
 
@@ -16,33 +21,39 @@ function walkSelectors(root, fn) {
  * Internal: recursively visit a node.
  */
 
-function visit(node, fn) {
+const visit = (
+	node: postcss.ChildNode | postcss.Root,
+	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
+) => {
 	if (node.type === "rule") {
 		const result = visitRule(node, fn);
 		if (result?.skip) return;
 	}
 
-	if (node.nodes) {
+	if ("nodes" in node && node.nodes) {
 		node.nodes.forEach((subnode) => {
 			visit(subnode, fn);
 		});
 	}
-}
+};
 
 /**
- * Internal: visits a `Rule` node.
+ * @internal
+ * visits a `Rule` node.
  */
-
-function visitRule(rule, fn) {
+const visitRule = (
+	rule: postcss.Rule,
+	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
+) => {
 	try {
 		flattenRule(rule, (selectors) => {
 			selectors.nodes.forEach((selector) => fn(rule, selector));
 		});
-	} catch (err) {
+	} catch (err: unknown) {
 		// Use `throw {skip: true}` to stop processing that nested tree.
 		if (!err.skip) throw err;
 		return err;
 	}
-}
+};
 
 export default walkSelectors;

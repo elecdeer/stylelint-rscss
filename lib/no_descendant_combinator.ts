@@ -6,13 +6,14 @@ const { utils, createPlugin } = stylelint;
 const ruleName = "rscss/no-descendant-combinator";
 
 const messages = utils.ruleMessages(ruleName, {
-	expected(selector) {
+	expected(selector: string) {
 		return `Descendant combinator not allowed: '${selector.toString().trim()}'`;
 	},
 });
 
-function plugin(primaryOption, secondaryOption) {
-	return (root, result) => {
+// TODO: RuleBase to Rule type
+const plugin: stylelint.RuleBase<boolean | "never", never> =
+	(primaryOption) => (root, result) => {
 		if (!primaryOption || primaryOption === "never") return;
 
 		walkSelectors(root, (rule, selector) => {
@@ -21,7 +22,7 @@ function plugin(primaryOption, secondaryOption) {
 
 				if (part.type === "combinator" && part.value === " ") {
 					utils.report({
-						message: messages.expected(selector),
+						message: messages.expected(`${selector}`),
 						node: rule,
 						result,
 						ruleName,
@@ -32,7 +33,6 @@ function plugin(primaryOption, secondaryOption) {
 			}
 		});
 	};
-}
 
 /*
  * Export

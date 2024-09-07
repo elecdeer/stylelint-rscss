@@ -2,9 +2,14 @@
  * Internal: split by a function
  */
 
-function splitBy(list, fn) {
+import type parser from "postcss-selector-parser";
+
+const splitBy = (
+	list: parser.Node[],
+	fn: (item: parser.Node, idx: number) => boolean,
+): parser.Node[][] => {
 	const result = [];
-	let section = [];
+	let section: parser.Node[] = [];
 
 	list.forEach((item, idx) => {
 		if (fn(item, idx)) {
@@ -18,6 +23,6 @@ function splitBy(list, fn) {
 
 	result.push(section);
 	return result;
-}
+};
 
 export default splitBy;

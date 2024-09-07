@@ -1,41 +1,39 @@
 import stylelint from "stylelint";
 import splitBy from "./helpers/split_by.js";
 import walkSelectors from "./helpers/walk_selectors.js";
+import type parser from "postcss-selector-parser";
+import type postcss from "postcss";
 
 const { utils, createPlugin } = stylelint;
 
 const ruleName = "rscss/class-format";
 
 const messages = utils.ruleMessages(ruleName, {
-	invalidComponentName(selector) {
+	invalidComponentName(selector: string) {
 		return `Invalid component name: '${selector.toString().trim()}'`;
 	},
-	invalidHelperName(selector) {
+	invalidHelperName(selector: string) {
 		return `Invalid helper name: '${selector.toString().trim()}'`;
 	},
-	invalidElementName(selector) {
+	invalidElementName(selector: string) {
 		return `Invalid element name: '${selector.toString().trim()}'`;
 	},
-	variantWithoutElement(selector) {
+	variantWithoutElement(selector: string) {
 		return `Variant has no element: '${selector.toString().trim()}'`;
 	},
-	invalidVariantName(selector) {
+	invalidVariantName(selector: string) {
 		return `Invalid variant name: '${selector.toString().trim()}'`;
 	},
-	invalidVariantNames(selectors) {
-		const selectorsText = selectors
-			.map((s) => `'${s.toString().trim()}'`)
-			.join(", ");
-		return `Invalid variant ${
-			selectors.length === 1 ? "name" : "names"
-		}: ${selectorsText}`;
+	invalidVariantNames(selectors: string) {
+		const isMultiple = selectors.split(",").length > 1;
+		return `Invalid variant ${isMultiple ? "name" : "names"}: ${selectors}`;
 	},
-	tooManyComponents(selector) {
+	tooManyComponents(selector: string) {
 		return `Only one component name is allowed: '${selector
 			.toString()
 			.trim()}'`;
 	},
-	tooDeep(selector) {
+	tooDeep(selector: string) {
 		return `Component too deep: '${selector.toString().trim()}'`;
 	},
 });
@@ -51,6 +49,23 @@ const EXPR = {
 	element: /^([a-z][a-z0-9]*)$/,
 	variant: /^(-[a-z0-9]+)(-[a-z0-9]+)*$/,
 	helper: /^_([a-z][a-z0-9\-]*)$/,
+} as const satisfies Record<ClassificationStyle, RegExp>;
+
+export type ClassificationStyle =
+	| "component"
+	| "element"
+	| "variant"
+	| "helper"
+	| "pascal-case"
+	| "camel-case";
+
+export type SecondaryOptions = {
+	component: ClassificationStyle | string;
+	element: ClassificationStyle | string;
+	variant: ClassificationStyle | string;
+	helper: ClassificationStyle | string;
+	maxDepth: number;
+	componentWhitelist: string[];
 };
 
 /**
@@ -64,13 +79,16 @@ const DEFAULTS = {
 	helper: "helper",
 	maxDepth: 3,
 	componentWhitelist: [],
-};
+} as const satisfies SecondaryOptions;
 
 /**
  * Internal: the plugin
  */
-
-function plugin(primaryOption, _options = {}) {
+// TODO: RuleBase to Rule type
+const plugin: stylelint.RuleBase<boolean | "never", SecondaryOptions> = (
+	primaryOption,
+	_options: Partial<SecondaryOptions> = {},
+) => {
 	const options = Object.assign({}, DEFAULTS, _options);
 
 	return (root, result) => {
@@ -94,9 +112,15 @@ function plugin(primaryOption, _options = {}) {
 			validateDepth(parts, node, result, selector, options);
 		});
 	};
-}
+};
 
-function validateDepth(parts, node, result, selector, options) {
+const validateDepth = (
+	parts: parser.Node[][],
+	node: postcss.Rule,
+	result: stylelint.PostcssResult,
+	selector: parser.Selector,
+	options: SecondaryOptions,
+) => {
 	if (typeof options.maxDepth !== "number") return;
 	if (parts.length - 1 > options.maxDepth) {
 		utils.report({
@@ -107,13 +131,18 @@ function validateDepth(parts, node, result, selector, options) {
 		});
 		throw { skip: true };
 	}
-}
+};
 
 /**
  * Internal: validate a top-level class
  */
 
-function validateComponent(parts, node, result, options) {
+const validateComponent = (
+	parts: parser.Node[],
+	node: postcss.Rule,
+	result: stylelint.PostcssResult,
+	options: SecondaryOptions,
+) => {
 	const classes = parts.filter(isClass);
 	const selector = classes.map((c) => `${c}`).join("");
 
@@ -180,7 +209,9 @@ function validateComponent(parts, node, result, options) {
 
 		if (invalids.length !== 0) {
 			utils.report({
-				message: messages.invalidVariantNames(invalids.map((c) => `${c}`)),
+				message: messages.invalidVariantNames(
+					invalids.map((c) => `${c.toString().trim()}`).join(", "),
+				),
 				node,
 				result,
 				ruleName,
@@ -188,13 +219,42 @@ function validateComponent(parts, node, result, options) {
 			throw { skip: true };
 		}
 	}
-}
+};
+
+/**
+ * Internal: get the classes of each part.
+ *
+ *     '.foo-bar .a' => [['.foo-bar'], ['.a']]
+ *     '.foo-bar.baz > .a' => [['.foo-bar', '.baz'], ['.a']]
+ */
+
+const getParts = (selector: parser.Selector) => {
+	const parts = splitBy(selector.nodes, isSeparator);
+	return parts
+		.filter((_, idx) => idx % 2 === 0) // Remove combinators
+		.map(getLastPart); // `.a ~ .b ~ .c` => `.c`
+};
+
+const isSeparator = (node: parser.Node): node is parser.Combinator => {
+	return (
+		node.type === "combinator" && (node.value === " " || node.value === ">")
+	);
+};
+
+const isClass = (node: parser.Node): node is parser.ClassName => {
+	return node.type === "class";
+};
 
 /**
  * Internal: validate a non-top-level class
  */
 
-function validateElement(parts, node, result, options) {
+const validateElement = (
+	parts: parser.Node[],
+	node: postcss.Rule,
+	result: stylelint.PostcssResult,
+	options: SecondaryOptions,
+) => {
 	// Only work if there are classes.
 	const classes = parts.filter(isClass);
 	if (classes.length === 0) return;
@@ -255,29 +315,7 @@ function validateElement(parts, node, result, options) {
 			}
 		}
 	});
-}
-
-/**
- * Internal: get the classes of each part.
- *
- *     '.foo-bar .a' => [['.foo-bar'], ['.a']]
- *     '.foo-bar.baz > .a' => [['.foo-bar', '.baz'], ['.a']]
- */
-
-function getParts(selector) {
-	const parts = splitBy(selector.nodes, isSeparator);
-	return parts
-		.filter((_, idx) => idx % 2 === 0) // Remove combinators
-		.map(getLastPart); // `.a ~ .b ~ .c` => `.c`
-}
-
-function isSeparator(s) {
-	return s.type === "combinator" && (s.value === " " || s.value === ">");
-}
-
-function isClass(s) {
-	return s.type === "class";
-}
+};
 
 /**
  * Internal: discard everything before the last combinator.
@@ -286,10 +324,10 @@ function isClass(s) {
  *    '.a ~ .b ~ .c' => '.c'
  */
 
-function getLastPart(parts) {
+const getLastPart = (parts: parser.Node[]) => {
 	const subparts = splitBy(parts, (s) => s.type === "combinator");
 	return subparts[subparts.length - 1];
-}
+};
 
 /**
  * Internal: returns a regular expression.
@@ -298,12 +336,23 @@ function getLastPart(parts) {
  *     expr(/.../) => /.../
  */
 
-function expr(name) {
-	if (!name) return;
-	if (EXPR[name]) return EXPR[name];
+const expr = (name: ClassificationStyle | string): RegExp => {
+	if (!name) throw new Error("No name provided");
+	if (
+		[
+			"component",
+			"element",
+			"variant",
+			"helper",
+			"pascal-case",
+			"camel-case",
+		].includes(name)
+	) {
+		return EXPR[name as ClassificationStyle];
+	}
 	if (typeof name === "string") return new RegExp(name);
-	return name;
-}
+	throw new Error(`Invalid expression: ${name}`);
+};
 
 /*
  * Export
