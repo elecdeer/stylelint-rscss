@@ -3,9 +3,36 @@
 	"description": "Validate CSS (and SCSS, Less, SugarSS) to RSCSS conventions",
 	"version": "0.4.0",
 	"author": "Rico Sta. Cruz <rico@ricostacruz.com> (http://ricostacruz.com)",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/rstacruz/stylelint-rscss.git"
+	},
 	"bugs": {
 		"url": "https://github.com/rstacruz/stylelint-rscss/issues"
 	},
+	"homepage": "https://github.com/rstacruz/stylelint-rscss#readme",
+	"directories": {
+		"doc": "docs"
+	},
+	"keywords": [
+		"css",
+		"rscss",
+		"sass",
+		"scss",
+		"stylelint",
+		"stylelint-config",
+		"stylelint-plugin"
+	],
+	"type": "module",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"errors": "stylelint 'fixtures/*'; true",
+		"test": "vitest",
+		"build": "tsup"
+	},
+	"packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177",
 	"dependencies": {
 		"postcss-resolve-nested-selector": "^0.1.6",
 		"postcss-selector-parser": "^6.1.2",
@@ -23,32 +50,5 @@
 	},
 	"peerDependencies": {
 		"stylelint": "^16.0.0"
-	},
-	"directories": {
-		"doc": "docs"
-	},
-	"homepage": "https://github.com/rstacruz/stylelint-rscss#readme",
-	"keywords": [
-		"css",
-		"rscss",
-		"sass",
-		"scss",
-		"stylelint",
-		"stylelint-config",
-		"stylelint-plugin"
-	],
-	"license": "MIT",
-	"type": "module",
-	"module": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/rstacruz/stylelint-rscss.git"
-	},
-	"scripts": {
-		"errors": "stylelint 'fixtures/*'; true",
-		"test": "vitest",
-		"build": "tsup"
-	},
-	"packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177"
+	}
 }
