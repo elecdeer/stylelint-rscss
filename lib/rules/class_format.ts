@@ -5,9 +5,9 @@ import {
 	type ResolvedSecondaryOptions,
 	type SecondaryOptions,
 	resolveSecondaryConfig,
-} from "./helpers/class_format_options";
-import { splitBy } from "./helpers/split_by";
-import { walkSelectors } from "./helpers/walk_selectors";
+} from "../helpers/class_format_options";
+import { splitBy } from "../helpers/split_by";
+import { walkSelectors } from "../helpers/walk_selectors";
 
 const { utils, createPlugin } = stylelint;
 

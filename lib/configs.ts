@@ -1,6 +1,6 @@
 import type stylelint from "stylelint";
-import classFormat from "./class_format";
-import noDescendantCombinator from "./no_descendant_combinator";
+import classFormat from "./rules/class_format";
+import noDescendantCombinator from "./rules/no_descendant_combinator";
 
 export default {
 	plugins: [classFormat, noDescendantCombinator],

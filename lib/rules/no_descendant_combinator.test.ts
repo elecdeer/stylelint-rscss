@@ -3,22 +3,22 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { getTestRule } from "vitest-stylelint-utils";
 
-import plugins from ".";
+import plugin from "./no_descendant_combinator";
 
 const testRule = getTestRule({
-	plugins,
+	plugins: [plugin],
 	describe,
 	expect,
 	it,
 });
 
 const childCssCode = fs.readFileSync(
-	path.resolve(__dirname, "../fixtures/child.css"),
+	path.resolve(__dirname, "../../fixtures/child.css"),
 	"utf-8",
 );
 
 const childScssCode = fs.readFileSync(
-	path.resolve(__dirname, "../fixtures/child.scss"),
+	path.resolve(__dirname, "../../fixtures/child.scss"),
 	"utf-8",
 );
 

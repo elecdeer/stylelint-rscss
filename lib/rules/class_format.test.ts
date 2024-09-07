@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { getTestRule } from "vitest-stylelint-utils";
 
-import plugins from ".";
+import plugin from "./class_format";
 
 const testRule = getTestRule({
-	plugins,
+	plugins: [plugin],
 	describe,
 	expect,
 	it,
