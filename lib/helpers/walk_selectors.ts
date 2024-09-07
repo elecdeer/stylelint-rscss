@@ -1,5 +1,5 @@
 import type postcss from "postcss";
-import flattenRule from "./flatten_rule.js";
+import { flattenRule } from "./flatten_rule.js";
 import type parser from "postcss-selector-parser";
 
 /**
@@ -10,7 +10,7 @@ import type parser from "postcss-selector-parser";
  *   // ...
  * });
  */
-const walkSelectors = (
+export const walkSelectors = (
 	root: postcss.Root,
 	fn: (rule: postcss.Rule, selector: parser.Selector) => void,
 ) => {
@@ -57,5 +57,3 @@ const visitRule = (
 		throw err;
 	}
 };
-
-export default walkSelectors;

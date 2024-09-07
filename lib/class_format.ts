@@ -1,6 +1,6 @@
 import stylelint from "stylelint";
-import splitBy from "./helpers/split_by.js";
-import walkSelectors from "./helpers/walk_selectors.js";
+import { splitBy } from "./helpers/split_by.js";
+import { walkSelectors } from "./helpers/walk_selectors.js";
 import type parser from "postcss-selector-parser";
 import type postcss from "postcss";
 

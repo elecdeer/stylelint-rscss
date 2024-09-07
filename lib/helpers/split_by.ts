@@ -4,7 +4,7 @@ import type parser from "postcss-selector-parser";
  * @internal
  * split by a function
  */
-const splitBy = (
+export const splitBy = (
 	list: parser.Node[],
 	fn: (item: parser.Node, idx: number) => boolean,
 ): parser.Node[][] => {
@@ -24,5 +24,3 @@ const splitBy = (
 	result.push(section);
 	return result;
 };
-
-export default splitBy;

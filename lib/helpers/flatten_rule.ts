@@ -6,7 +6,7 @@ import type * as postcss from "postcss";
 /**
  * Flattens a nested `rule`. Invokes `fn` with the flattened selectors.
  */
-const flattenRule = <T>(
+export const flattenRule = <T>(
 	rule: postcss.Rule,
 	fn: (selectors: selectorParser.Root) => T,
 ) => {
@@ -19,5 +19,3 @@ const flattenRule = <T>(
 
 	return result;
 };
-
-export default flattenRule;

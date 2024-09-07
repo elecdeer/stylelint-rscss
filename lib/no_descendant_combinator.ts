@@ -1,5 +1,5 @@
 import stylelint from "stylelint";
-import walkSelectors from "./helpers/walk_selectors.js";
+import { walkSelectors } from "./helpers/walk_selectors.js";
 
 const { utils, createPlugin } = stylelint;
 
