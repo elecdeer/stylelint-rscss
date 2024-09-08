@@ -1,5 +1,11 @@
 # @elecdeer/stylelint-rscss
 
+## 1.0.4
+
+### Patch Changes
+
+- [#12](https://github.com/elecdeer/stylelint-rscss/pull/12) [`a393cf0`](https://github.com/elecdeer/stylelint-rscss/commit/a393cf0bdb21ac944c9d040f2e88228b2bbe54d5) Thanks [@elecdeer](https://github.com/elecdeer)! - correct exported file to allow extending @elecdeer/stylelint-rscss/config
+
 ## 1.0.3
 
 ### Patch Changes
