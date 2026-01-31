@@ -19,7 +19,7 @@ importers:
         version: 6.1.2
       stylelint-scss:
         specifier: ^6.5.1
-        version: 6.5.1(stylelint@16.9.0(typescript@5.5.4))
+        version: 6.5.1(stylelint@16.9.0(typescript@5.9.3))
     devDependencies:
       '@biomejs/biome':
         specifier: 1.8.3
@@ -30,6 +30,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.27.8
         version: 2.27.8
+      '@types/node':
+        specifier: ^25.1.0
+        version: 25.1.0
       '@types/postcss-resolve-nested-selector':
         specifier: ^0.1.3
         version: 0.1.3
@@ -38,19 +41,19 @@ importers:
         version: 4.0.9(postcss@8.4.45)
       stylelint:
         specifier: ^16.9.0
-        version: 16.9.0(typescript@5.5.4)
+        version: 16.9.0(typescript@5.9.3)
       tsup:
         specifier: ^8.2.4
-        version: 8.2.4(postcss@8.4.45)(typescript@5.5.4)
+        version: 8.2.4(postcss@8.4.45)(typescript@5.9.3)
       typescript:
-        specifier: ^5.5.4
-        version: 5.5.4
+        specifier: ^5.9.3
+        version: 5.9.3
       vitest:
         specifier: ^4.0.18
-        version: 4.0.18
+        version: 4.0.18(@types/node@25.1.0)
       vitest-stylelint-utils:
         specifier: ^2.0.0
-        version: 2.0.0(stylelint@16.9.0(typescript@5.5.4))(vitest@4.0.18)
+        version: 2.0.0(stylelint@16.9.0(typescript@5.9.3))(vitest@4.0.18(@types/node@25.1.0))
 
 packages:
 
@@ -805,6 +808,9 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
+
+  '@types/node@25.1.0':
+    resolution: {integrity: sha512-t7frlewr6+cbx+9Ohpl0NOTKXZNV9xHRmNOvql47BFJKcEG1CxtxlPEEe+gR9uhVWM4DwhnvTF110mIL4yP9RA==}
 
   '@types/postcss-resolve-nested-selector@0.1.3':
     resolution: {integrity: sha512-X9uvtduNmt2E5dAHIaPACByAscJM90RwcFN60jMM7mydVTRe/Wa+icHuLuQS9X//nTvbhxGG5qXThdO+VpaROw==}
@@ -1789,10 +1795,13 @@ packages:
       typescript:
         optional: true
 
-  typescript@5.5.4:
-    resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
+  typescript@5.9.3:
+    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
 
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
@@ -2500,6 +2509,10 @@ snapshots:
 
   '@types/node@12.20.55': {}
 
+  '@types/node@25.1.0':
+    dependencies:
+      undici-types: 7.16.0
+
   '@types/postcss-resolve-nested-selector@0.1.3':
     dependencies:
       postcss: 8.4.45
@@ -2515,13 +2528,13 @@ snapshots:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  '@vitest/mocker@4.0.18(vite@7.3.1)':
+  '@vitest/mocker@4.0.18(vite@7.3.1(@types/node@25.1.0))':
     dependencies:
       '@vitest/spy': 4.0.18
       estree-walker: 3.0.3
       magic-string: 0.30.21
     optionalDependencies:
-      vite: 7.3.1
+      vite: 7.3.1(@types/node@25.1.0)
 
   '@vitest/pretty-format@4.0.18':
     dependencies:
@@ -2656,14 +2669,14 @@ snapshots:
 
   consola@3.2.3: {}
 
-  cosmiconfig@9.0.0(typescript@5.5.4):
+  cosmiconfig@9.0.0(typescript@5.9.3):
     dependencies:
       env-paths: 2.2.1
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
     optionalDependencies:
-      typescript: 5.5.4
+      typescript: 5.9.3
 
   cross-spawn@5.1.0:
     dependencies:
@@ -3333,7 +3346,7 @@ snapshots:
 
   strip-final-newline@2.0.0: {}
 
-  stylelint-scss@6.5.1(stylelint@16.9.0(typescript@5.5.4)):
+  stylelint-scss@6.5.1(stylelint@16.9.0(typescript@5.9.3)):
     dependencies:
       css-tree: 2.3.1
       is-plain-object: 5.0.0
@@ -3342,9 +3355,9 @@ snapshots:
       postcss-resolve-nested-selector: 0.1.6
       postcss-selector-parser: 6.1.2
       postcss-value-parser: 4.2.0
-      stylelint: 16.9.0(typescript@5.5.4)
+      stylelint: 16.9.0(typescript@5.9.3)
 
-  stylelint@16.9.0(typescript@5.5.4):
+  stylelint@16.9.0(typescript@5.9.3):
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.1(@csstools/css-tokenizer@3.0.1)
       '@csstools/css-tokenizer': 3.0.1
@@ -3353,7 +3366,7 @@ snapshots:
       '@dual-bundle/import-meta-resolve': 4.1.0
       balanced-match: 2.0.0
       colord: 2.9.3
-      cosmiconfig: 9.0.0(typescript@5.5.4)
+      cosmiconfig: 9.0.0(typescript@5.9.3)
       css-functions-list: 3.2.2
       css-tree: 2.3.1
       debug: 4.3.6
@@ -3461,7 +3474,7 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  tsup@8.2.4(postcss@8.4.45)(typescript@5.5.4):
+  tsup@8.2.4(postcss@8.4.45)(typescript@5.9.3):
     dependencies:
       bundle-require: 5.0.0(esbuild@0.23.1)
       cac: 6.7.14
@@ -3481,20 +3494,22 @@ snapshots:
       tree-kill: 1.2.2
     optionalDependencies:
       postcss: 8.4.45
-      typescript: 5.5.4
+      typescript: 5.9.3
     transitivePeerDependencies:
       - jiti
       - supports-color
       - tsx
       - yaml
 
-  typescript@5.5.4: {}
+  typescript@5.9.3: {}
+
+  undici-types@7.16.0: {}
 
   universalify@0.1.2: {}
 
   util-deprecate@1.0.2: {}
 
-  vite@7.3.1:
+  vite@7.3.1(@types/node@25.1.0):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3503,17 +3518,18 @@ snapshots:
       rollup: 4.57.1
       tinyglobby: 0.2.15
     optionalDependencies:
+      '@types/node': 25.1.0
       fsevents: 2.3.3
 
-  vitest-stylelint-utils@2.0.0(stylelint@16.9.0(typescript@5.5.4))(vitest@4.0.18):
+  vitest-stylelint-utils@2.0.0(stylelint@16.9.0(typescript@5.9.3))(vitest@4.0.18(@types/node@25.1.0)):
     dependencies:
-      stylelint: 16.9.0(typescript@5.5.4)
-      vitest: 4.0.18
+      stylelint: 16.9.0(typescript@5.9.3)
+      vitest: 4.0.18(@types/node@25.1.0)
 
-  vitest@4.0.18:
+  vitest@4.0.18(@types/node@25.1.0):
     dependencies:
       '@vitest/expect': 4.0.18
-      '@vitest/mocker': 4.0.18(vite@7.3.1)
+      '@vitest/mocker': 4.0.18(vite@7.3.1(@types/node@25.1.0))
       '@vitest/pretty-format': 4.0.18
       '@vitest/runner': 4.0.18
       '@vitest/snapshot': 4.0.18
@@ -3530,8 +3546,10 @@ snapshots:
       tinyexec: 1.0.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1
+      vite: 7.3.1(@types/node@25.1.0)
       why-is-node-running: 2.3.0
+    optionalDependencies:
+      '@types/node': 25.1.0
     transitivePeerDependencies:
       - jiti
       - less

@@ -1,15 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
-import { describe, expect, it } from "vitest";
+import { describe } from "vitest";
 import { getTestRule } from "vitest-stylelint-utils";
 
 import plugin from "./no_descendant_combinator";
 
 const testRule = getTestRule({
 	plugins: [plugin],
-	describe,
-	expect,
-	it,
 });
 
 const childCssCode = fs.readFileSync(
