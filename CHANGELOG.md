@@ -1,5 +1,15 @@
 # @elecdeer/stylelint-rscss
 
+## 1.0.5
+
+### Patch Changes
+
+- [#17](https://github.com/elecdeer/stylelint-rscss/pull/17) [`d422d08`](https://github.com/elecdeer/stylelint-rscss/commit/d422d08347bc7f7a2e4a26d8990e3e5b6ec4db20) Thanks [@elecdeer](https://github.com/elecdeer)! - Migrate build tool from tsup to tsdown
+
+- [#18](https://github.com/elecdeer/stylelint-rscss/pull/18) [`20de86d`](https://github.com/elecdeer/stylelint-rscss/commit/20de86d0c32df2c4b8e3773082c057625e67cc50) Thanks [@elecdeer](https://github.com/elecdeer)! - chore: migrate to OIDC publishing for npm releases
+
+- [#15](https://github.com/elecdeer/stylelint-rscss/pull/15) [`f43b825`](https://github.com/elecdeer/stylelint-rscss/commit/f43b825754e32c5912dc740c9d48a5dcee8edc22) Thanks [@elecdeer](https://github.com/elecdeer)! - Update all devDependencies to latest versions including Biome v2, Vitest v4, Stylelint v16.26, and TypeScript v5.9
+
 ## 1.0.4
 
 ### Patch Changes
