@@ -51,7 +51,7 @@
 		"build": "tsup",
 		"changeset": "changeset"
 	},
-	"packageManager": "pnpm@9.9.0+sha256.7a4261e50d9a44d9240baf6c9d6e10089dcf0a79d0007f2a26985a6927324177",
+	"packageManager": "pnpm@10.28.2+sha512.41872f037ad22f7348e3b1debbaf7e867cfd448f2726d9cf74c08f19507c31d2c8e7a11525b983febc2df640b5438dee6023ebb1f84ed43cc2d654d2bc326264",
 	"dependencies": {
 		"postcss": "^8.4.45",
 		"postcss-resolve-nested-selector": "^0.1.6",
