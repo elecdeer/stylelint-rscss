@@ -62,7 +62,7 @@ const EXPR = {
 	"camel-case": /^([a-z][a-z0-9]*)([A-Z][a-z0-9]*)+$/,
 	element: /^([a-z][a-z0-9]*)$/,
 	variant: /^(-[a-z0-9]+)(-[a-z0-9]+)*$/,
-	helper: /^_([a-z][a-z0-9\-]*)$/,
+	helper: /^_([a-z][a-z0-9-]*)$/,
 } as const satisfies Record<ClassificationStyle, RegExp>;
 
 /**

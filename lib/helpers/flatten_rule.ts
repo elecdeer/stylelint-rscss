@@ -1,7 +1,6 @@
+import type * as postcss from "postcss";
 import resolveNestedSelector from "postcss-resolve-nested-selector";
 import selectorParser from "postcss-selector-parser";
-
-import type * as postcss from "postcss";
 
 /**
  * Flattens a nested `rule`. Invokes `fn` with the flattened selectors.

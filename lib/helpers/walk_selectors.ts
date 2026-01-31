@@ -45,7 +45,9 @@ const visitRule = async (
 ) => {
 	try {
 		await flattenRule(rule, (selectors) => {
-			selectors.nodes.forEach((selector) => fn(rule, selector));
+			for (const selector of selectors.nodes) {
+				fn(rule, selector);
+			}
 		});
 	} catch (err: unknown) {
 		// Use `throw {skip: true}` to stop processing that nested tree.
