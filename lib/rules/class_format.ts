@@ -3,8 +3,8 @@ import type parser from "postcss-selector-parser";
 import stylelint from "stylelint";
 import {
 	type ResolvedSecondaryOptions,
-	type SecondaryOptions,
 	resolveSecondaryConfig,
+	type SecondaryOptions,
 } from "../helpers/class_format_options";
 import { splitBy } from "../helpers/split_by";
 import { walkSelectors } from "../helpers/walk_selectors";
