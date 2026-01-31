@@ -45,7 +45,7 @@
 		"provenance": true
 	},
 	"scripts": {
-		"test": "vitest",
+		"test": "vitest --run",
 		"check:type": "tsc --noEmit",
 		"check:biome": "biome ci",
 		"build": "tsup",
@@ -67,8 +67,8 @@
 		"stylelint": "^16.9.0",
 		"tsup": "^8.2.4",
 		"typescript": "^5.5.4",
-		"vitest": "^2.0.5",
-		"vitest-stylelint-utils": "^1.0.1"
+		"vitest": "^4.0.18",
+		"vitest-stylelint-utils": "^2.0.0"
 	},
 	"peerDependencies": {
 		"stylelint": "^16.0.0"
