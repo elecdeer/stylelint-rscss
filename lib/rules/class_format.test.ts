@@ -168,3 +168,40 @@ describe("whitelist", () => {
 		],
 	});
 });
+
+describe("css nesting", () => {
+	testRule({
+		ruleName: "rscss/class-format",
+		config: [true],
+
+		accept: [
+			{ code: ".good-component { & > .element { } }" },
+			{ code: ".good-component { > .element { } }" },
+			{ code: ".good-component { .element { } }" },
+			{ code: ".good-component { &.-variant { } }" },
+			{ code: ".good-component { & > .element { & > .nested { } } }" },
+		],
+		reject: [
+			{
+				code: ".badcomponent { & > .element { } }",
+				message: "Invalid component name: '.badcomponent' (rscss/class-format)",
+			},
+			{
+				code: ".good-component { .bad_element { } }",
+				message: "Invalid element name: '.bad_element' (rscss/class-format)",
+			},
+			{
+				code: ".good-component { > .bad_element { } }",
+				message: "Invalid element name: '.bad_element' (rscss/class-format)",
+			},
+			{
+				code: ".good-component { &.badvariant { } }",
+				message: "Invalid variant name: '.badvariant' (rscss/class-format)",
+			},
+			{
+				code: ".good-component { .-badvariant { } }",
+				message: "Variant has no element: '.-badvariant' (rscss/class-format)",
+			},
+		],
+	});
+});
